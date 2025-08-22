@@ -1,16 +1,15 @@
 // server.ts
 
-// existing imports...
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import homeRouter from "./routes/todo.route";
-import { connectDB } from "./database/config"; 
-
+import { connectDB } from "./database/config";
 
 dotenv.config();
 
 const app = express();
+
 app.use(cors());
 app.use(express.json());
 
@@ -25,10 +24,14 @@ app.get("/health", (_req, res) => res.send("OK"));
 // Register routes
 app.use("/api/todo", homeRouter);
 
-const PORT = Number(process.env.PORT) || 5001;
-
-connectDB().then(() => {
-  app.listen(PORT, () => {
-    console.log(`🚀 Server running on http://localhost:${PORT}`);
+// ✅ Connect DB before handling requests
+connectDB()
+  .then(() => {
+    console.log("✅ Database connected successfully");
+  })
+  .catch((err) => {
+    console.error("❌ Database connection failed:", err.message);
   });
-});
+
+// 👉 IMPORTANT: Do NOT use app.listen here (Vercel handles it)
+export default app;
