@@ -1,0 +1,27 @@
+// models/todo.model.ts
+import { Schema, model, Document } from "mongoose";
+
+export interface ITodo extends Document {
+  id: string;        // UUID string
+  text: string;      // task text
+  note?: string;     // optional note
+  done: boolean;     // status
+  createdAt: Date;   // ISO timestamp
+  dateKey: string;   // yyyy-MM-dd string
+}
+
+const TodoSchema = new Schema<ITodo>(
+  {
+    id: { type: String, required: true, unique: true },   // e.g. "ea92a516-7985-4856-9b59-77fac77f949a"
+    text: { type: String, required: true, trim: true },   // e.g. "wefewfer34"
+    note: { type: String, default: "" },                  // e.g. "q3r32"
+    done: { type: Boolean, default: false },              // e.g. false
+    createdAt: { type: Date, default: Date.now },         // e.g. "2025-08-22T17:05:36.653Z"
+    dateKey: { type: String, required: true }             // e.g. "2025-08-22"
+  },
+  {
+    versionKey: false // disables __v field
+  }
+);
+
+export const TodoModel = model<ITodo>("Todo", TodoSchema);
