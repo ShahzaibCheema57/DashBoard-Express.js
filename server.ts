@@ -27,9 +27,6 @@ app.use("/api/todo", homeRouter);
 
 const PORT = Number(process.env.PORT) || 5001;
 
-connectDB().then(() => {
-  app.listen(PORT, () => {
-    console.log(`🚀 Server running on http://localhost:${PORT}`);
-  });
-});
+connectDB().catch(err => console.error("DB error:", err));
+
 export default app;
