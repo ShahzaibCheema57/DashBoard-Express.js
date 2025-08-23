@@ -11,18 +11,18 @@ import {
 const router = Router();
 
 // CREATE
-router.post("/", addTodo);
+router.post("/add", addTodo);
 
 // READ ALL
-router.get("/", getAllTodos);
+router.get("/get-all", getAllTodos);
 
 // READ ONE
-router.get("/:id", getOneTodo);
+router.get("/get-one/:id", getOneTodo);
 
 // UPDATE
-router.put("/:id", editTodo);
+router.put("/update/:id", editTodo);
 
 // DELETE
-router.delete("/:id", deleteTodo);
+router.delete("/delete/:id", deleteTodo);
 
 export default router;

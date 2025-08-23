@@ -85,7 +85,7 @@ export async function editTodo(req: Request, res: Response) {
 
     const updates: any = {};
     if (typeof text === "string") updates.text = text.trim();
-    if (typeof note === "string") updates.note = note;
+    if (typeof note === "string")  updates.note = note;
     if (typeof done === "boolean") updates.done = done;
     if (typeof dateKey === "string") updates.dateKey = dateKey;
 
