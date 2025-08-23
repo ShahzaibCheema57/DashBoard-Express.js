@@ -1,17 +1,15 @@
-// models/connection.ts
+// database/config.ts
 import mongoose from "mongoose";
 
+let isConnected = false;
+
 export async function connectDB() {
+  if (isConnected) return;
   const uri = process.env.MONGODB_URI;
   if (!uri) {
-    throw new Error("MONGODB_URI not defined in .env");
+    console.warn("MONGODB_URI is not set. Skipping DB connection.");
+    return; // let routes that don't need DB still work (e.g., /health)
   }
-
-  try {
-    await mongoose.connect(uri);
-    console.log("✅ MongoDB connected successfully");
-  } catch (err: any) {
-    console.error("❌ MongoDB connection error:", err.message);
-    process.exit(1);
-  }
+  await mongoose.connect(uri);
+  isConnected = true;
 }
